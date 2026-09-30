@@ -1,0 +1,156 @@
+{
+  "domain": "sme-digital-matching",
+  "version": 1,
+  "matches": [
+    {
+      "match_id": "match-010-vision",
+      "enterprise_id": "ent-010",
+      "product_id": "prod-vision-qc",
+      "generated_at": "2026-03-15",
+      "checks": [
+        {
+          "check_key": "industry_applicable",
+          "satisfied": true,
+          "evidence_source": "products[prod-vision-qc].applicable_industries 含 enterprises[ent-010].industry_id=ind-machining"
+        },
+        {
+          "check_key": "pain_process_supported",
+          "satisfied": true,
+          "evidence_source": "products[prod-vision-qc].supported_processes 含 enterprises[ent-010].constraints.pain_process_id=proc-inspection"
+        },
+        {
+          "check_key": "downtime_window_sufficient",
+          "satisfied": true,
+          "evidence_source": "prerequisites.required_downtime_hours=3 <= constraints.max_downtime_hours_per_window=4",
+          "detail": "安装可在周日 08:00-18:00 单个窗口内完成"
+        },
+        {
+          "check_key": "budget_sufficient",
+          "satisfied": true,
+          "evidence_source": "pricing.total_amount=156000 <= constraints.budget_cap=180000（报价版本 2026.02-CNY）"
+        },
+        {
+          "check_key": "prerequisites_met",
+          "satisfied": true,
+          "evidence_source": "network_requirements 支持内网独立网段，满足 network_segmentation_required=true；样本采集条件需在尽调确认",
+          "detail": "标注样本采集为有条件项，列为尽调待办而非否决"
+        },
+        {
+          "check_key": "target_metric_covered",
+          "satisfied": true,
+          "evidence_source": "capability_claims 覆盖 enterprises[ent-010].targets 的 metric-inspection-hours 与 metric-defect-escape"
+        },
+        {
+          "check_key": "verifiable_case_exists",
+          "satisfied": true,
+          "evidence_source": "verifiable_cases[case-vision-01] 同行业同工序，evidence_id=ev-case-vision-01，contactable=true"
+        }
+      ],
+      "reasons": [
+        "企业痛点工序为成品检验，该产品恰好只承诺检验工序能力，未用无关模块凑数",
+        "所需停机 3 小时不超过企业单次 4 小时窗口，报价 15.6 万元在 18 万元预算内",
+        "两条目标指标均有对应能力声明与可回访的同工序案例支撑，声明给出 25%-40% 与 30%-60% 的区间而非确定承诺",
+        "判定依据全部来自企业实测基线与产品 2026.02 版披露；行业平均 OEE 71% 未参与任何判定"
+      ],
+      "recommendation": "proceed"
+    },
+    {
+      "match_id": "match-010-aps",
+      "enterprise_id": "ent-010",
+      "product_id": "prod-cloud-aps",
+      "generated_at": "2026-03-15",
+      "checks": [
+        {
+          "check_key": "industry_applicable",
+          "satisfied": true,
+          "evidence_source": "products[prod-cloud-aps].applicable_industries 含 ind-machining"
+        },
+        {
+          "check_key": "pain_process_supported",
+          "satisfied": false,
+          "evidence_source": "supported_processes=[proc-turning, proc-milling, proc-smt, proc-assembly]，不含 pain_process_id=proc-inspection；limitations 亦明示不覆盖成品检验"
+        },
+        {
+          "check_key": "downtime_window_sufficient",
+          "satisfied": false,
+          "evidence_source": "prerequisites.required_downtime_hours=8 > constraints.max_downtime_hours_per_window=4"
+        },
+        {
+          "check_key": "budget_sufficient",
+          "satisfied": false,
+          "evidence_source": "pricing.total_amount=260000 > constraints.budget_cap=180000，且不含无 MES 时的数据采集改造"
+        },
+        {
+          "check_key": "prerequisites_met",
+          "satisfied": false,
+          "evidence_source": "要求持续公网连接，与 network_segmentation_required=true 冲突；企业无 MES 还需另购改造"
+        },
+        {
+          "check_key": "target_metric_covered",
+          "satisfied": false,
+          "evidence_source": "仅声明 metric-oee，不覆盖企业目标 metric-inspection-hours 与 metric-defect-escape"
+        },
+        {
+          "check_key": "verifiable_case_exists",
+          "satisfied": false,
+          "evidence_source": "case-aps-01 工序为 proc-turning，与痛点工序 proc-inspection 不同，不能作为本场景可验证案例"
+        }
+      ],
+      "reasons": [
+        "全功能旗舰版演示覆盖多个模块，但没有一个模块解决企业认定的检验工序瓶颈",
+        "实施需要连续停机 8 小时，是企业窗口上限的两倍；报价超预算 44%，且隐藏采集改造费用",
+        "云端持续联网与企业网段隔离要求冲突，同行业案例工序不同，不可外推"
+      ],
+      "recommendation": "reject"
+    },
+    {
+      "match_id": "match-010-energy",
+      "enterprise_id": "ent-010",
+      "product_id": "prod-energy-lite",
+      "generated_at": "2026-03-15",
+      "checks": [
+        {
+          "check_key": "industry_applicable",
+          "satisfied": true,
+          "evidence_source": "products[prod-energy-lite].applicable_industries 含 ind-machining"
+        },
+        {
+          "check_key": "pain_process_supported",
+          "satisfied": true,
+          "evidence_source": "supported_processes 列出 proc-inspection，但 limitations 明示只监测能耗、不提升检验效率"
+        },
+        {
+          "check_key": "downtime_window_sufficient",
+          "satisfied": true,
+          "evidence_source": "prerequisites.required_downtime_hours=2 <= 4"
+        },
+        {
+          "check_key": "budget_sufficient",
+          "satisfied": true,
+          "evidence_source": "pricing.total_amount=60000 <= 180000"
+        },
+        {
+          "check_key": "prerequisites_met",
+          "satisfied": true,
+          "evidence_source": "支持内网独立网段，无其他冲突前提"
+        },
+        {
+          "check_key": "target_metric_covered",
+          "satisfied": false,
+          "evidence_source": "仅声明 metric-energy；企业目标是检验工时与漏检率，limitations 已自认不提升检验效率"
+        },
+        {
+          "check_key": "verifiable_case_exists",
+          "satisfied": false,
+          "evidence_source": "case-energy-01 由服务商自述（verifier=provider），contactable=false，不构成可验证案例"
+        }
+      ],
+      "reasons": [
+        "停机与预算都满足，但产品自认不改善检验工序，命中不了企业目标指标",
+        "唯一案例不可回访且为服务商自述，效果区间无法独立验证",
+        "可作为未来能耗管理的备选，不应因便宜而推荐用于当前痛点"
+      ],
+      "recommendation": "conditional"
+    }
+  ]
+}

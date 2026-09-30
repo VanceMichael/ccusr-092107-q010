@@ -1,0 +1,35 @@
+{
+  "domain": "sme-digital-matching",
+  "version": 1,
+  "industries": [
+    {
+      "industry_id": "ind-machining",
+      "name": "金属切削与机加工",
+      "processes": [
+        { "process_id": "proc-turning", "name": "数控车削" },
+        { "process_id": "proc-milling", "name": "数控铣削" },
+        { "process_id": "proc-inspection", "name": "成品检验" }
+      ],
+      "metrics": [
+        { "metric_id": "metric-oee", "name": "设备综合效率", "unit": "%", "direction": "higher_better" },
+        { "metric_id": "metric-fpy", "name": "一次合格率", "unit": "%", "direction": "higher_better" },
+        { "metric_id": "metric-inspection-hours", "name": "单批检验工时", "unit": "小时/批", "direction": "lower_better" },
+        { "metric_id": "metric-defect-escape", "name": "漏检率", "unit": "%", "direction": "lower_better" },
+        { "metric_id": "metric-energy", "name": "单件能耗", "unit": "kWh/件", "direction": "lower_better" }
+      ]
+    },
+    {
+      "industry_id": "ind-electronics",
+      "name": "电子装配",
+      "processes": [
+        { "process_id": "proc-smt", "name": "SMT 贴片" },
+        { "process_id": "proc-assembly", "name": "整机组装" },
+        { "process_id": "proc-inspection", "name": "成品检验" }
+      ],
+      "metrics": [
+        { "metric_id": "metric-smt-yield", "name": "贴片良率", "unit": "%", "direction": "higher_better" },
+        { "metric_id": "metric-defect-escape", "name": "漏检率", "unit": "%", "direction": "lower_better" }
+      ]
+    }
+  ]
+}

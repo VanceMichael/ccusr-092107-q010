@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "产品能力披露：能力边界、实施前提、报价版本与可验证案例",
+  "type": "object",
+  "required": ["domain", "version", "products"],
+  "properties": {
+    "domain": { "const": "sme-digital-matching" },
+    "version": { "type": "integer", "minimum": 1 },
+    "products": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "product_id",
+          "provider_id",
+          "name",
+          "disclosure_version",
+          "applicable_industries",
+          "supported_processes",
+          "capability_claims",
+          "limitations",
+          "prerequisites",
+          "pricing",
+          "verifiable_cases"
+        ],
+        "properties": {
+          "product_id": { "type": "string", "minLength": 1 },
+          "provider_id": { "type": "string", "minLength": 1 },
+          "name": { "type": "string", "minLength": 1 },
+          "disclosure_version": { "type": "string", "minLength": 1 },
+          "applicable_industries": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "supported_processes": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 1 }
+          },
+          "capability_claims": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["claim_id", "metric_id", "expected_effect"],
+              "properties": {
+                "claim_id": { "type": "string", "minLength": 1 },
+                "metric_id": { "type": "string", "minLength": 1 },
+                "expected_effect": {
+                  "type": "object",
+                  "required": ["direction", "min_percent", "max_percent"],
+                  "properties": {
+                    "direction": {
+                      "enum": ["increase", "decrease"]
+                    },
+                    "min_percent": { "type": "number" },
+                    "max_percent": { "type": "number" }
+                  },
+                  "additionalProperties": false
+                },
+                "case_evidence_id": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "limitations": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 },
+            "description": "能力边界：明确不适用的场景，演示功能不等于承诺"
+          },
+          "prerequisites": {
+            "type": "object",
+            "required": ["required_downtime_hours", "network_requirements"],
+            "properties": {
+              "required_downtime_hours": { "type": "number", "minimum": 0 },
+              "network_requirements": {
+                "type": "array",
+                "items": { "type": "string", "minLength": 1 }
+              },
+              "other_conditions": {
+                "type": "array",
+                "items": { "type": "string", "minLength": 1 }
+              }
+            },
+            "additionalProperties": false
+          },
+          "pricing": {
+            "type": "object",
+            "required": ["version", "currency", "total_amount", "includes"],
+            "properties": {
+              "version": { "type": "string", "minLength": 1 },
+              "currency": { "type": "string", "enum": ["CNY"] },
+              "total_amount": { "type": "number", "exclusiveMinimum": 0 },
+              "includes": {
+                "type": "array",
+                "items": { "type": "string", "minLength": 1 }
+              }
+            },
+            "additionalProperties": false
+          },
+          "verifiable_cases": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["case_id", "industry_id", "process_id", "evidence_id", "contactable"],
+              "properties": {
+                "case_id": { "type": "string", "minLength": 1 },
+                "industry_id": { "type": "string", "minLength": 1 },
+                "process_id": { "type": "string", "minLength": 1 },
+                "evidence_id": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "指向证据登记册中的 case_reference"
+                },
+                "contactable": { "type": "boolean" }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,133 @@
+{
+  "domain": "sme-digital-matching",
+  "version": 1,
+  "products": [
+    {
+      "product_id": "prod-vision-qc",
+      "provider_id": "prov-shijie",
+      "name": "视界质检视觉系统（小型部署版）",
+      "disclosure_version": "2026.02",
+      "applicable_industries": ["ind-machining"],
+      "supported_processes": ["proc-inspection"],
+      "capability_claims": [
+        {
+          "claim_id": "claim-vision-hours",
+          "metric_id": "metric-inspection-hours",
+          "expected_effect": { "direction": "decrease", "min_percent": 25, "max_percent": 40 },
+          "case_evidence_id": "ev-case-vision-01"
+        },
+        {
+          "claim_id": "claim-vision-escape",
+          "metric_id": "metric-defect-escape",
+          "expected_effect": { "direction": "decrease", "min_percent": 30, "max_percent": 60 },
+          "case_evidence_id": "ev-case-vision-01"
+        }
+      ],
+      "limitations": [
+        "仅支持已列出的表面尺寸与外观缺陷，复杂内部探伤不在范围内",
+        "产线光照与拍摄位变化超过约定条件时需重新标定",
+        "不包含排产与能耗管理功能"
+      ],
+      "prerequisites": {
+        "required_downtime_hours": 3,
+        "network_requirements": ["支持厂区内网独立网段部署，无需持续连接公网"],
+        "other_conditions": ["企业需提供每类不少于 200 张标注样本或配合两周采集"]
+      },
+      "pricing": {
+        "version": "2026.02-CNY",
+        "currency": "CNY",
+        "total_amount": 156000,
+        "includes": ["相机与边缘主机", "现场安装与一次标定", "一年运维", "操作员培训两场"]
+      },
+      "verifiable_cases": [
+        {
+          "case_id": "case-vision-01",
+          "industry_id": "ind-machining",
+          "process_id": "proc-inspection",
+          "evidence_id": "ev-case-vision-01",
+          "contactable": true
+        }
+      ]
+    },
+    {
+      "product_id": "prod-cloud-aps",
+      "provider_id": "prov-yunpai",
+      "name": "云排智能排产套件（全功能旗舰版演示）",
+      "disclosure_version": "2026.01",
+      "applicable_industries": ["ind-machining", "ind-electronics"],
+      "supported_processes": ["proc-turning", "proc-milling", "proc-smt", "proc-assembly"],
+      "capability_claims": [
+        {
+          "claim_id": "claim-aps-oee",
+          "metric_id": "metric-oee",
+          "expected_effect": { "direction": "increase", "min_percent": 8, "max_percent": 15 },
+          "case_evidence_id": "ev-case-aps-01"
+        }
+      ],
+      "limitations": [
+        "旗舰版演示含排产、能耗、质量模块，但企业采购按模块计价，演示功能不构成全部承诺",
+        "不覆盖成品检验工序",
+        "标准实施依赖 MES 工单数据接入，无 MES 时需另购数据采集改造"
+      ],
+      "prerequisites": {
+        "required_downtime_hours": 8,
+        "network_requirements": ["需持续公网连接至云端调度服务"],
+        "other_conditions": ["需有运行中的 MES 或接受额外采集改造报价"]
+      },
+      "pricing": {
+        "version": "2026.01-CNY",
+        "currency": "CNY",
+        "total_amount": 260000,
+        "includes": ["云端排产许可一年", "标准实施（不含采集改造）", "两场管理员培训"]
+      },
+      "verifiable_cases": [
+        {
+          "case_id": "case-aps-01",
+          "industry_id": "ind-machining",
+          "process_id": "proc-turning",
+          "evidence_id": "ev-case-aps-01",
+          "contactable": true
+        }
+      ]
+    },
+    {
+      "product_id": "prod-energy-lite",
+      "provider_id": "prov-lvdong",
+      "name": "绿动能耗轻量监测",
+      "disclosure_version": "2025.11",
+      "applicable_industries": ["ind-machining"],
+      "supported_processes": ["proc-turning", "proc-milling", "proc-inspection"],
+      "capability_claims": [
+        {
+          "claim_id": "claim-energy",
+          "metric_id": "metric-energy",
+          "expected_effect": { "direction": "decrease", "min_percent": 3, "max_percent": 8 },
+          "case_evidence_id": "ev-case-energy-01"
+        }
+      ],
+      "limitations": [
+        "只监测能耗，不提升检验工序效率",
+        "节能效果依赖企业按建议调整排班，产品本身不自动调度"
+      ],
+      "prerequisites": {
+        "required_downtime_hours": 2,
+        "network_requirements": ["支持厂区内网独立网段部署"]
+      },
+      "pricing": {
+        "version": "2025.11-CNY",
+        "currency": "CNY",
+        "total_amount": 60000,
+        "includes": ["电表与采集网关", "半年看板服务"]
+      },
+      "verifiable_cases": [
+        {
+          "case_id": "case-energy-01",
+          "industry_id": "ind-machining",
+          "process_id": "proc-turning",
+          "evidence_id": "ev-case-energy-01",
+          "contactable": false
+        }
+      ]
+    }
+  ]
+}

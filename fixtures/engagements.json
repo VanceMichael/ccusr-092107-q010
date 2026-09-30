@@ -1,0 +1,119 @@
+{
+  "domain": "sme-digital-matching",
+  "version": 1,
+  "engagements": [
+    {
+      "engagement_id": "eng-010-vision",
+      "enterprise_id": "ent-010",
+      "product_id": "prod-vision-qc",
+      "provider_id": "prov-shijie",
+      "match_id": "match-010-vision",
+      "started_at": "2026-04-01",
+      "state": "in_use",
+      "subsidy": {
+        "program_id": "subsidy-sme-fast-2026",
+        "reserved_amount": 40000,
+        "currency": "CNY",
+        "reserved_at": "2026-05-09",
+        "occupancy": "disbursed"
+      },
+      "data_isolation": {
+        "tenant_scope": "ent-010 独立租户与独立网段 10.20.0.0/24，模型训练不跨租户复用图像",
+        "commercial_data_visible_to_provider": false,
+        "separation_mechanism": "边缘主机本地存储 + 租户级逻辑隔离，服务商运维需企业单次授权"
+      },
+      "evidence_ownership": {
+        "enterprise_owns_evidence": true,
+        "portable_on_switch": true,
+        "export_format": "ZIP(JSON 记录 + CSV 读数 + 签署件 PDF)，随附 sha256 清单"
+      },
+      "records": [
+        {
+          "record_id": "rec-vision-sign",
+          "kind": "signing",
+          "at": "2026-05-08",
+          "evidence_id": "ev-contract-a"
+        },
+        {
+          "record_id": "rec-vision-deploy",
+          "kind": "deployment",
+          "at": "2026-06-15",
+          "evidence_id": "ev-deploy-a"
+        },
+        {
+          "record_id": "rec-vision-accept",
+          "kind": "stage_acceptance",
+          "at": "2026-07-20",
+          "evidence_id": "ev-accept-a",
+          "stage": "试点工位模型准确率与培训达标",
+          "passed": true
+        },
+        {
+          "record_id": "rec-vision-reading-hours",
+          "kind": "metric_reading",
+          "at": "2026-09-10",
+          "evidence_id": "ev-reading-a1",
+          "line_id": "line-03",
+          "metric_id": "metric-inspection-hours",
+          "value": 9.5
+        },
+        {
+          "record_id": "rec-vision-reading-escape",
+          "kind": "metric_reading",
+          "at": "2026-09-10",
+          "evidence_id": "ev-reading-a2",
+          "line_id": "line-03",
+          "metric_id": "metric-defect-escape",
+          "value": 1.1
+        },
+        {
+          "record_id": "rec-vision-usage",
+          "kind": "usage_log",
+          "at": "2026-09-25",
+          "evidence_id": "ev-usage-a"
+        }
+      ]
+    },
+    {
+      "engagement_id": "eng-010-aps-dd",
+      "enterprise_id": "ent-010",
+      "product_id": "prod-cloud-aps",
+      "provider_id": "prov-yunpai",
+      "match_id": "match-010-aps",
+      "started_at": "2026-04-05",
+      "state": "exited_failed",
+      "data_isolation": {
+        "tenant_scope": "尽调沙箱：仅接收企业脱敏样本资料",
+        "commercial_data_visible_to_provider": false,
+        "separation_mechanism": "一次性尽调工作区，终止后关闭并删除副本"
+      },
+      "evidence_ownership": {
+        "enterprise_owns_evidence": true,
+        "portable_on_switch": true,
+        "export_format": "ZIP(JSON 记录 + CSV 读数 + 签署件 PDF)，随附 sha256 清单"
+      },
+      "records": [
+        {
+          "record_id": "rec-aps-exit",
+          "kind": "failure_exit",
+          "at": "2026-05-02",
+          "evidence_id": "ev-exit-b",
+          "stage": "实施前尽调：停机窗口与网络前提无法满足",
+          "passed": false
+        },
+        {
+          "record_id": "rec-aps-export",
+          "kind": "data_export",
+          "at": "2026-05-02",
+          "evidence_id": "ev-export-b"
+        },
+        {
+          "record_id": "rec-aps-delete",
+          "kind": "provider_data_deletion",
+          "at": "2026-05-09",
+          "evidence_id": "ev-delete-b"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+{
+  "domain": "sme-digital-matching",
+  "version": 1,
+  "enterprise": {
+    "enterprise_id": "ent-010",
+    "industry_id": "ind-machining",
+    "growth_stage": "growing",
+    "recorded_at": "2026-03-10",
+    "production_lines": [
+      { "line_id": "line-01", "name": "一号车削单元", "process_id": "proc-turning" },
+      { "line_id": "line-02", "name": "二号铣削单元", "process_id": "proc-milling" },
+      { "line_id": "line-03", "name": "终检工位", "process_id": "proc-inspection" }
+    ],
+    "baselines": [
+      {
+        "line_id": "line-01",
+        "metric_id": "metric-oee",
+        "value": 63.5,
+        "measured_at": "2026-03-06",
+        "basis": "enterprise_measured",
+        "evidence_id": "ev-base-oee1"
+      },
+      {
+        "line_id": "line-02",
+        "metric_id": "metric-oee",
+        "value": 61.0,
+        "measured_at": "2026-03-06",
+        "basis": "enterprise_measured",
+        "evidence_id": "ev-base-oee2"
+      },
+      {
+        "line_id": "line-03",
+        "metric_id": "metric-inspection-hours",
+        "value": 14.0,
+        "measured_at": "2026-03-09",
+        "basis": "enterprise_measured",
+        "evidence_id": "ev-base-insp"
+      },
+      {
+        "line_id": "line-03",
+        "metric_id": "metric-defect-escape",
+        "value": 2.3,
+        "measured_at": "2026-03-09",
+        "basis": "enterprise_measured",
+        "evidence_id": "ev-base-escape"
+      },
+      {
+        "line_id": "line-01",
+        "metric_id": "metric-oee",
+        "value": 71.0,
+        "measured_at": "2026-02-01",
+        "basis": "industry_reference",
+        "evidence_id": "ev-ref-oee",
+        "note": "行业平均参照值，仅用于对标展示，不作为本企业现状或匹配依据"
+      }
+    ],
+    "targets": [
+      { "line_id": "line-03", "metric_id": "metric-inspection-hours", "target_value": 9.0, "deadline": "2026-12-31" },
+      { "line_id": "line-03", "metric_id": "metric-defect-escape", "target_value": 1.0, "deadline": "2026-12-31" }
+    ],
+    "constraints": {
+      "pain_process_id": "proc-inspection",
+      "max_downtime_hours_per_window": 4,
+      "allowed_windows": [
+        { "weekday": "sun", "start": "08:00", "end": "18:00" }
+      ],
+      "budget_cap": 180000,
+      "budget_currency": "CNY",
+      "network_segmentation_required": true
+    }
+  }
+}

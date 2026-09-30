@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "企业档案：产线基线、目标指标与约束（基线须企业实测，行业均值只能作参照）",
+  "type": "object",
+  "required": ["domain", "version", "enterprise"],
+  "properties": {
+    "domain": { "const": "sme-digital-matching" },
+    "version": { "type": "integer", "minimum": 1 },
+    "enterprise": {
+      "type": "object",
+      "required": [
+        "enterprise_id",
+        "industry_id",
+        "growth_stage",
+        "recorded_at",
+        "production_lines",
+        "baselines",
+        "targets",
+        "constraints"
+      ],
+      "properties": {
+        "enterprise_id": { "type": "string", "minLength": 1 },
+        "industry_id": { "type": "string", "minLength": 1 },
+        "growth_stage": {
+          "enum": ["startup", "growing", "mature", "transforming"]
+        },
+        "recorded_at": { "type": "string", "format": "date" },
+        "production_lines": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["line_id", "name", "process_id"],
+            "properties": {
+              "line_id": { "type": "string", "minLength": 1 },
+              "name": { "type": "string", "minLength": 1 },
+              "process_id": { "type": "string", "minLength": 1 }
+            },
+            "additionalProperties": false
+          }
+        },
+        "baselines": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["line_id", "metric_id", "value", "measured_at", "basis", "evidence_id"],
+            "properties": {
+              "line_id": { "type": "string", "minLength": 1 },
+              "metric_id": { "type": "string", "minLength": 1 },
+              "value": { "type": "number" },
+              "measured_at": { "type": "string", "format": "date" },
+              "basis": {
+                "enum": ["enterprise_measured", "industry_reference"],
+                "description": "enterprise_measured 才是企业现状；industry_reference 仅作参照，不得用于匹配判定"
+              },
+              "evidence_id": { "type": "string", "minLength": 1 },
+              "note": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "targets": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["line_id", "metric_id", "target_value", "deadline"],
+            "properties": {
+              "line_id": { "type": "string", "minLength": 1 },
+              "metric_id": { "type": "string", "minLength": 1 },
+              "target_value": { "type": "number" },
+              "deadline": { "type": "string", "format": "date" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "constraints": {
+          "type": "object",
+          "required": [
+            "pain_process_id",
+            "max_downtime_hours_per_window",
+            "budget_cap",
+            "budget_currency"
+          ],
+          "properties": {
+            "pain_process_id": {
+              "type": "string",
+              "minLength": 1,
+              "description": "企业认定效率最低、希望优先改善的工序"
+            },
+            "max_downtime_hours_per_window": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "allowed_windows": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["weekday", "start", "end"],
+                "properties": {
+                  "weekday": {
+                    "enum": ["mon", "tue", "wed", "thu", "fri", "sat", "sun"]
+                  },
+                  "start": {
+                    "type": "string",
+                    "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                  },
+                  "end": {
+                    "type": "string",
+                    "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "budget_cap": { "type": "number", "exclusiveMinimum": 0 },
+            "budget_currency": { "type": "string", "enum": ["CNY"] },
+            "network_segmentation_required": { "type": "boolean" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

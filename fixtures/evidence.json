@@ -1,0 +1,146 @@
+{
+  "domain": "sme-digital-matching",
+  "version": 1,
+  "evidence": [
+    {
+      "evidence_id": "ev-base-oee1",
+      "kind": "measured_reading",
+      "owner": "enterprise",
+      "verifier": "enterprise",
+      "recorded_at": "2026-03-06",
+      "summary": "一号车削单元连续两周班次记录实测 OEE（虚构）",
+      "source_ref": "ent-010/mes-export/2026-03"
+    },
+    {
+      "evidence_id": "ev-base-oee2",
+      "kind": "measured_reading",
+      "owner": "enterprise",
+      "verifier": "enterprise",
+      "recorded_at": "2026-03-06",
+      "summary": "二号铣削单元连续两周班次记录实测 OEE（虚构）",
+      "source_ref": "ent-010/mes-export/2026-03"
+    },
+    {
+      "evidence_id": "ev-base-insp",
+      "kind": "measured_reading",
+      "owner": "enterprise",
+      "verifier": "joint",
+      "recorded_at": "2026-03-09",
+      "summary": "终检工位六批产品人工检验计时实测（虚构）",
+      "source_ref": "ent-010/time-study/2026-03"
+    },
+    {
+      "evidence_id": "ev-base-escape",
+      "kind": "measured_reading",
+      "owner": "enterprise",
+      "verifier": "joint",
+      "recorded_at": "2026-03-09",
+      "summary": "终检后客户端反馈缺陷统计实测漏检率（虚构）",
+      "source_ref": "ent-010/quality-ledger/2026-03"
+    },
+    {
+      "evidence_id": "ev-ref-oee",
+      "kind": "third_party_report",
+      "owner": "enterprise",
+      "verifier": "third_party",
+      "recorded_at": "2026-02-01",
+      "summary": "行业协会发布的机加工平均 OEE 参照值 71%（虚构，仅作行业参照，不代表本企业现状）"
+    },
+    {
+      "evidence_id": "ev-case-vision-01",
+      "kind": "case_reference",
+      "owner": "provider",
+      "verifier": "customer",
+      "recorded_at": "2025-11-20",
+      "summary": "某机加工厂视觉质检上线三个月，单批检验工时下降 36%（虚构案例，客户可回访）"
+    },
+    {
+      "evidence_id": "ev-case-aps-01",
+      "kind": "case_reference",
+      "owner": "provider",
+      "verifier": "customer",
+      "recorded_at": "2025-09-12",
+      "summary": "某大批量车削车间 APS 排产案例（虚构，工序为车削，与本次痛点工序不同）"
+    },
+    {
+      "evidence_id": "ev-case-energy-01",
+      "kind": "case_reference",
+      "owner": "provider",
+      "verifier": "provider",
+      "recorded_at": "2025-05-30",
+      "summary": "能耗监测试点自述数据（虚构，客户暂不接受回访）"
+    },
+    {
+      "evidence_id": "ev-contract-a",
+      "kind": "signed_document",
+      "owner": "enterprise",
+      "verifier": "joint",
+      "recorded_at": "2026-05-08",
+      "summary": "与视界公司签署的采购与服务合同，含停机窗口、保密与证据归属条款（虚构）"
+    },
+    {
+      "evidence_id": "ev-deploy-a",
+      "kind": "system_log_export",
+      "owner": "provider",
+      "verifier": "provider",
+      "recorded_at": "2026-06-15",
+      "summary": "周日窗口内 2 小时 40 分完成安装，未超过单次 4 小时停机上限（虚构）"
+    },
+    {
+      "evidence_id": "ev-accept-a",
+      "kind": "signed_document",
+      "owner": "enterprise",
+      "verifier": "joint",
+      "recorded_at": "2026-07-20",
+      "summary": "阶段验收单：检验工位模型准确率与培训图片要求达标，双方签署（虚构）"
+    },
+    {
+      "evidence_id": "ev-reading-a1",
+      "kind": "measured_reading",
+      "owner": "enterprise",
+      "verifier": "joint",
+      "recorded_at": "2026-09-10",
+      "summary": "上线后六批产品单批检验工时实测（虚构）"
+    },
+    {
+      "evidence_id": "ev-reading-a2",
+      "kind": "measured_reading",
+      "owner": "enterprise",
+      "verifier": "joint",
+      "recorded_at": "2026-09-10",
+      "summary": "上线后漏检率实测（虚构）"
+    },
+    {
+      "evidence_id": "ev-usage-a",
+      "kind": "system_log_export",
+      "owner": "enterprise",
+      "verifier": "provider",
+      "recorded_at": "2026-09-25",
+      "summary": "连续三个月检验工位每日使用记录导出（虚构）"
+    },
+    {
+      "evidence_id": "ev-exit-b",
+      "kind": "signed_document",
+      "owner": "enterprise",
+      "verifier": "joint",
+      "recorded_at": "2026-05-02",
+      "summary": "尽调确认需连续停机 8 小时、企业窗口无法满足，签署无责终止备忘（虚构）"
+    },
+    {
+      "evidence_id": "ev-export-b",
+      "kind": "export_manifest",
+      "owner": "enterprise",
+      "verifier": "enterprise",
+      "recorded_at": "2026-05-02",
+      "summary": "尽调期间提交资料的导出清单与哈希，企业留存（虚构）"
+    },
+    {
+      "evidence_id": "ev-delete-b",
+      "kind": "deletion_confirmation",
+      "owner": "provider",
+      "verifier": "provider",
+      "recorded_at": "2026-05-09",
+      "summary": "云排公司确认删除企业尽调资料及其副本（虚构）"
+    }
+  ]
+}

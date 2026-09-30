@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "供需匹配：逐项核对硬约束并给出可追溯理由",
+  "type": "object",
+  "required": ["domain", "version", "matches"],
+  "properties": {
+    "domain": { "const": "sme-digital-matching" },
+    "version": { "type": "integer", "minimum": 1 },
+    "matches": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "match_id",
+          "enterprise_id",
+          "product_id",
+          "generated_at",
+          "checks",
+          "reasons",
+          "recommendation"
+        ],
+        "properties": {
+          "match_id": { "type": "string", "minLength": 1 },
+          "enterprise_id": { "type": "string", "minLength": 1 },
+          "product_id": { "type": "string", "minLength": 1 },
+          "generated_at": { "type": "string", "format": "date" },
+          "checks": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["check_key", "satisfied", "evidence_source"],
+              "properties": {
+                "check_key": {
+                  "enum": [
+                    "industry_applicable",
+                    "pain_process_supported",
+                    "downtime_window_sufficient",
+                    "budget_sufficient",
+                    "prerequisites_met",
+                    "target_metric_covered",
+                    "verifiable_case_exists"
+                  ]
+                },
+                "satisfied": { "type": "boolean" },
+                "evidence_source": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "理由引用：企业档案或产品披露中的具体字段路径"
+                },
+                "detail": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "reasons": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "minLength": 1 },
+            "description": "人可读理由，每条必须能由 checks 与披露内容支撑"
+          },
+          "recommendation": {
+            "enum": ["proceed", "conditional", "reject"]
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
