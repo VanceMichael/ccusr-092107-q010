@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "行业平均指标（仅供对比）",
+  "type": "object",
+  "required": ["domain", "doc_type", "version", "usage", "benchmarks"],
+  "properties": {
+    "domain": { "const": "sme-digital-matching" },
+    "doc_type": { "const": "industry_benchmarks" },
+    "version": { "type": "integer", "minimum": 1 },
+    "industry": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" }
+      }
+    },
+    "usage": {
+      "const": "comparison_only",
+      "description": "行业平均值只能事后对比，不得作为企业基线、目标或匹配打分依据"
+    },
+    "disclaimer": { "type": "string" },
+    "benchmarks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "metric", "average", "unit", "source"],
+        "properties": {
+          "id": { "type": "string" },
+          "metric": { "type": "string" },
+          "average": { "type": "number" },
+          "unit": { "type": "string" },
+          "year": { "type": "integer" },
+          "source": { "type": "string" },
+          "sample_note": { "type": "string" }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

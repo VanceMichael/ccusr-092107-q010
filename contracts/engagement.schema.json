@@ -1,0 +1,181 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "尽调、签约、验收、退出与证据账本",
+  "type": "object",
+  "required": ["domain", "doc_type", "version", "enterprise_ref", "subsidies", "due_diligence", "engagements", "ledger"],
+  "properties": {
+    "domain": { "const": "sme-digital-matching" },
+    "doc_type": { "const": "engagement_ledger" },
+    "version": { "type": "integer", "minimum": 1 },
+    "as_of": { "type": "string" },
+    "enterprise_ref": { "type": "string" },
+    "subsidies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "cap_cny", "rules"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "cap_cny": { "type": "number" },
+          "rules": { "type": "string" }
+        }
+      }
+    },
+    "due_diligence": {
+      "type": "object",
+      "required": ["parallel", "tracks"],
+      "properties": {
+        "parallel": { "type": "boolean" },
+        "tracks": {
+          "type": "array",
+          "minItems": 2,
+          "description": "多家服务商并行尽调，互不感知企业给别家的资料",
+          "items": {
+            "type": "object",
+            "required": ["id", "provider_ref", "product_ref", "started_at", "status"],
+            "properties": {
+              "id": { "type": "string" },
+              "provider_ref": { "type": "string" },
+              "product_ref": { "type": "string" },
+              "quote_version_ref": { "type": "string" },
+              "started_at": { "type": "string" },
+              "closed_at": { "type": "string" },
+              "status": { "enum": ["open", "shortlisted", "rejected"] },
+              "nda_signed": { "type": "boolean" },
+              "data_scope": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "engagements": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "provider_ref", "product_ref", "quote_version_ref", "status", "stages", "subsidy_occupations", "data_grants"],
+        "properties": {
+          "id": { "type": "string" },
+          "provider_ref": { "type": "string" },
+          "product_ref": { "type": "string" },
+          "quote_version_ref": { "type": "string" },
+          "status": { "enum": ["active", "completed", "terminated_failure_exit"] },
+          "stages": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "name", "acceptance_criteria", "status"],
+              "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "acceptance_criteria": { "type": "array", "items": { "type": "string" } },
+                "status": { "enum": ["pending", "accepted", "rejected"] },
+                "decided_at": { "type": "string" },
+                "evidence_refs": { "type": "array", "items": { "type": "string" } },
+                "rejection_reason": { "type": "string" }
+              }
+            }
+          },
+          "subsidy_occupations": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "subsidy_ref", "amount_cny", "reserved_at", "status"],
+              "properties": {
+                "id": { "type": "string" },
+                "subsidy_ref": { "type": "string" },
+                "amount_cny": { "type": "number" },
+                "reserved_at": { "type": "string" },
+                "released_at": { "type": ["string", "null"] },
+                "disbursed_cny": { "type": "number" },
+                "status": { "enum": ["reserved", "partially_disbursed", "released_closed"] },
+                "note": { "type": "string" }
+              }
+            }
+          },
+          "data_grants": {
+            "type": "array",
+            "description": "按数据集最小授权；退出即撤销",
+            "items": {
+              "type": "object",
+              "required": ["id", "datasets", "access", "status"],
+              "properties": {
+                "id": { "type": "string" },
+                "datasets": { "type": "array", "items": { "type": "string" } },
+                "access": { "enum": ["read", "write"] },
+                "boundary": { "type": "string" },
+                "granted_at": { "type": "string" },
+                "revoked_at": { "type": ["string", "null"] },
+                "status": { "enum": ["active", "revoked"] }
+              }
+            }
+          },
+          "exit": {
+            "type": "object",
+            "required": ["type", "at", "reason_evidence_ref", "obligations"],
+            "properties": {
+              "type": { "const": "failure_exit" },
+              "at": { "type": "string" },
+              "reason_evidence_ref": { "type": "string" },
+              "obligations": { "type": "array", "items": { "type": "string" } },
+              "data_return_evidence_ref": { "type": "string" },
+              "data_destruction_evidence_ref": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "provider_switch": {
+      "type": "object",
+      "required": ["from_engagement_ref", "to_engagement_ref", "at", "evidence_retained_by_enterprise"],
+      "properties": {
+        "from_engagement_ref": { "type": "string" },
+        "to_engagement_ref": { "type": "string" },
+        "at": { "type": "string" },
+        "evidence_retained_by_enterprise": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "isolation_note": { "type": "string" }
+      }
+    },
+    "event_types": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "due_diligence_started",
+          "due_diligence_closed",
+          "contract_signed",
+          "subsidy_reserved",
+          "subsidy_disbursed",
+          "subsidy_released",
+          "data_granted",
+          "grant_revoked",
+          "deployed",
+          "stage_accepted",
+          "stage_rejected",
+          "metric_change",
+          "sustained_use",
+          "exit_failure",
+          "provider_switched",
+          "evidence_registered"
+        ]
+      }
+    },
+    "ledger": {
+      "type": "array",
+      "description": "签约、部署、指标变化、持续使用分类型记录，按时间追加，不可删改",
+      "items": {
+        "type": "object",
+        "required": ["id", "at", "type"],
+        "properties": {
+          "id": { "type": "string" },
+          "at": { "type": "string" },
+          "type": { "type": "string" },
+          "engagement_ref": { "type": ["string", "null"] },
+          "provider_ref": { "type": ["string", "null"] },
+          "payload": { "type": "object" },
+          "evidence_refs": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

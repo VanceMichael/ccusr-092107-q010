@@ -1,0 +1,242 @@
+{
+  "domain": "sme-digital-matching",
+  "doc_type": "engagement_ledger",
+  "version": 1,
+  "as_of": "2026-11-15",
+  "enterprise_ref": "ent-hongye",
+  "subsidies": [
+    {
+      "id": "sub-local-xklz",
+      "name": "区中小企业小快轻准数字化补贴（虚构）",
+      "cap_cny": 80000,
+      "rules": "按首年实际投入 40% 补贴，封顶 8 万元；同一企业同一时点只能占用一个项目额度；项目失败退出并完成验收核销后，已占用额度释放，可用于后续项目。"
+    }
+  ],
+  "due_diligence": {
+    "parallel": true,
+    "tracks": [
+      {
+        "id": "dd-qieyun",
+        "provider_ref": "prov-qieyun",
+        "product_ref": "prod-qieyun-smed",
+        "quote_version_ref": "quote-qy-2026",
+        "started_at": "2026-03-02",
+        "closed_at": "2026-03-31",
+        "status": "shortlisted",
+        "nda_signed": true,
+        "data_scope": "仅开放脱敏后的基线摘要（m-changeover/m-oee-stamping/m-downtime）与周日窗口照片 ev-dd-wifi；不开放客户与订单数据"
+      },
+      {
+        "id": "dd-pangu",
+        "provider_ref": "prov-pangu",
+        "product_ref": "prod-pangu-mes",
+        "quote_version_ref": "quote-pg-2026",
+        "started_at": "2026-03-02",
+        "closed_at": "2026-03-09",
+        "status": "rejected",
+        "nda_signed": true,
+        "data_scope": "仅开放脱敏基线摘要；结合 2025 年失败退出记录 ev-deploy-fail-pg，确认停机窗与预算硬冲突，提前终止"
+      },
+      {
+        "id": "dd-muyan",
+        "provider_ref": "prov-muyan",
+        "product_ref": "prod-muyan-vision",
+        "quote_version_ref": "quote-my-2026",
+        "started_at": "2026-03-02",
+        "closed_at": "2026-03-12",
+        "status": "rejected",
+        "nda_signed": false,
+        "data_scope": "仅沟通质量工序概况；因不解决一期换模瓶颈、预算不宜并行且打光 POC 未排期，本期不进入短名单，留作二期候选"
+      }
+    ]
+  },
+  "engagements": [
+    {
+      "id": "eng-pangu-2025",
+      "provider_ref": "prov-pangu",
+      "product_ref": "prod-pangu-mes",
+      "quote_version_ref": "quote-pg-2025",
+      "status": "terminated_failure_exit",
+      "stages": [
+        {
+          "id": "st-pg-1",
+          "name": "整线割接部署",
+          "acceptance_criteria": ["在连续周末窗口内完成整线割接", "割接期间无在制品积压超 2 天"],
+          "status": "rejected",
+          "decided_at": "2025-09-15",
+          "evidence_refs": ["ev-deploy-fail-pg"],
+          "rejection_reason": "披露的 16 小时连续割接在本厂每周 4 小时窗口内两次尝试均无法完成；签约前未如实核对窗口约束，判定不具备继续实施条件"
+        },
+        { "id": "st-pg-2", "name": "试运行", "acceptance_criteria": [], "status": "pending" },
+        { "id": "st-pg-3", "name": "指标验收", "acceptance_criteria": [], "status": "pending" }
+      ],
+      "subsidy_occupations": [
+        {
+          "id": "sub-occ-2025",
+          "subsidy_ref": "sub-local-xklz",
+          "amount_cny": 80000,
+          "reserved_at": "2025-05-20",
+          "released_at": "2025-09-30",
+          "disbursed_cny": 0,
+          "status": "released_closed",
+          "note": "失败退出核销后全额释放，次年被锲云项目重新占用"
+        }
+      ],
+      "data_grants": [
+        {
+          "id": "grant-g-pg",
+          "datasets": ["ds-line-equipment-ledger", "ds-anon-output-summary"],
+          "access": "read",
+          "boundary": "设备台账与脱敏产量汇总；不含客户、订单、单价信息",
+          "granted_at": "2025-05-22",
+          "revoked_at": "2025-09-30",
+          "status": "revoked"
+        }
+      ],
+      "exit": {
+        "type": "failure_exit",
+        "at": "2025-09-30",
+        "reason_evidence_ref": "ev-deploy-fail-pg",
+        "obligations": [
+          "撤销全部数据访问授权",
+          "归还或删除企业资料并出具确认",
+          "释放已占用补贴额度，不得计入实施完成案例",
+          "企业基线证据 ev-base-log/ev-base-oee/ev-base-defect 不随合同终止而转移"
+        ],
+        "data_return_evidence_ref": "ev-pg-return",
+        "data_destruction_evidence_ref": "ev-pg-destroy"
+      }
+    },
+    {
+      "id": "eng-qieyun-2026",
+      "provider_ref": "prov-qieyun",
+      "product_ref": "prod-qieyun-smed",
+      "quote_version_ref": "quote-qy-2026",
+      "status": "completed",
+      "stages": [
+        {
+          "id": "st-qy-1",
+          "name": "分台部署上线",
+          "acceptance_criteria": [
+            "两台冲床看板可正常计时与提醒",
+            "全部安装在周日 4 小时窗口内分批完成，无月末窗口占用",
+            "无安装安全事故"
+          ],
+          "status": "accepted",
+          "decided_at": "2026-04-27",
+          "evidence_refs": ["ev-deploy-qy"]
+        },
+        {
+          "id": "st-qy-2",
+          "name": "连续使用 30 天",
+          "acceptance_criteria": ["换模记录覆盖率不低于 95%", "每周不少于 4 个班次实际使用看板"],
+          "status": "accepted",
+          "decided_at": "2026-06-01",
+          "evidence_refs": ["ev-base-log"]
+        },
+        {
+          "id": "st-qy-3",
+          "name": "换模指标验收",
+          "acceptance_criteria": ["以企业自有计时记录核验，连续四周平均换模时间不高于 60 分钟/次"],
+          "status": "accepted",
+          "decided_at": "2026-10-26",
+          "evidence_refs": ["ev-metric-2026-10"]
+        }
+      ],
+      "subsidy_occupations": [
+        {
+          "id": "sub-occ-2026",
+          "subsidy_ref": "sub-local-xklz",
+          "amount_cny": 80000,
+          "reserved_at": "2026-04-02",
+          "released_at": null,
+          "disbursed_cny": 48000,
+          "status": "partially_disbursed",
+          "note": "上线阶段拨 32000 元，指标验收后累计拨 48000 元；尾款待持续使用满 12 个月核验"
+        }
+      ],
+      "data_grants": [
+        {
+          "id": "grant-g-qy",
+          "datasets": ["ds-changeover-log-anon", "ds-line-output-ledger"],
+          "access": "read",
+          "boundary": "仅脱敏换模记录与产量台账；不含客户、订单、单价、人员信息；与盘古尽调轨道及目衍尽调轨道互不可见",
+          "granted_at": "2026-04-03",
+          "revoked_at": null,
+          "status": "active"
+        }
+      ]
+    }
+  ],
+  "provider_switch": {
+    "from_engagement_ref": "eng-pangu-2025",
+    "to_engagement_ref": "eng-qieyun-2026",
+    "at": "2026-04-02",
+    "evidence_retained_by_enterprise": [
+      "ev-base-log",
+      "ev-base-oee",
+      "ev-base-defect",
+      "ev-deploy-fail-pg",
+      "ev-pg-destroy"
+    ],
+    "isolation_note": "企业证据仓归企业所有；锲云只能看到企业选择性开放的脱敏基线摘要，看不到盘古尽调/合同资料，反之亦然。"
+  },
+  "event_types": [
+    "due_diligence_started",
+    "due_diligence_closed",
+    "contract_signed",
+    "subsidy_reserved",
+    "subsidy_disbursed",
+    "subsidy_released",
+    "data_granted",
+    "grant_revoked",
+    "deployed",
+    "stage_accepted",
+    "stage_rejected",
+    "metric_change",
+    "sustained_use",
+    "exit_failure",
+    "provider_switched",
+    "evidence_registered"
+  ],
+  "ledger": [
+    { "id": "l-001", "at": "2025-05-20", "type": "contract_signed", "engagement_ref": "eng-pangu-2025", "provider_ref": "prov-pangu", "payload": { "quote_version_ref": "quote-pg-2025", "first_year_total_cny": 352000 }, "evidence_refs": [] },
+    { "id": "l-002", "at": "2025-05-20", "type": "subsidy_reserved", "engagement_ref": "eng-pangu-2025", "provider_ref": "prov-pangu", "payload": { "occupation_ref": "sub-occ-2025", "subsidy_ref": "sub-local-xklz", "amount_cny": 80000 }, "evidence_refs": [] },
+    { "id": "l-003", "at": "2025-05-22", "type": "data_granted", "engagement_ref": "eng-pangu-2025", "provider_ref": "prov-pangu", "payload": { "grant_ref": "grant-g-pg", "datasets": ["ds-line-equipment-ledger", "ds-anon-output-summary"], "access": "read" }, "evidence_refs": [] },
+    { "id": "l-004", "at": "2025-09-15", "type": "evidence_registered", "engagement_ref": "eng-pangu-2025", "provider_ref": "prov-pangu", "payload": { "evidence_ref": "ev-deploy-fail-pg", "name": "两次周日割接失败的施工与停机记录", "retained_by_enterprise": true }, "evidence_refs": ["ev-deploy-fail-pg"] },
+    { "id": "l-005", "at": "2025-09-15", "type": "stage_rejected", "engagement_ref": "eng-pangu-2025", "provider_ref": "prov-pangu", "payload": { "stage_ref": "st-pg-1", "reason_summary": "16 小时连续割接无法拆入每周 4 小时窗口" }, "evidence_refs": ["ev-deploy-fail-pg"] },
+    { "id": "l-006", "at": "2025-09-30", "type": "grant_revoked", "engagement_ref": "eng-pangu-2025", "provider_ref": "prov-pangu", "payload": { "grant_ref": "grant-g-pg" }, "evidence_refs": [] },
+    { "id": "l-007", "at": "2025-09-30", "type": "evidence_registered", "engagement_ref": "eng-pangu-2025", "provider_ref": "prov-pangu", "payload": { "evidence_ref": "ev-pg-return", "name": "企业资料归还清单", "retained_by_enterprise": true }, "evidence_refs": ["ev-pg-return"] },
+    { "id": "l-008", "at": "2025-09-30", "type": "evidence_registered", "engagement_ref": "eng-pangu-2025", "provider_ref": "prov-pangu", "payload": { "evidence_ref": "ev-pg-destroy", "name": "服务商出具的数据删除确认函", "retained_by_enterprise": true }, "evidence_refs": ["ev-pg-destroy"] },
+    { "id": "l-009", "at": "2025-09-30", "type": "subsidy_released", "engagement_ref": "eng-pangu-2025", "provider_ref": "prov-pangu", "payload": { "occupation_ref": "sub-occ-2025", "disbursed_cny": 0 }, "evidence_refs": ["ev-pg-destroy"] },
+    { "id": "l-010", "at": "2025-09-30", "type": "exit_failure", "engagement_ref": "eng-pangu-2025", "provider_ref": "prov-pangu", "payload": { "reason_summary": "停机窗口硬性不满足且签约前未核对", "data_isolation_closed": true }, "evidence_refs": ["ev-deploy-fail-pg", "ev-pg-destroy"] },
+    { "id": "l-011", "at": "2026-03-02", "type": "due_diligence_started", "engagement_ref": null, "provider_ref": null, "payload": { "parallel": true, "tracks": ["dd-qieyun", "dd-pangu", "dd-muyan"], "cross_visibility": false }, "evidence_refs": [] },
+    { "id": "l-012", "at": "2026-03-09", "type": "due_diligence_closed", "engagement_ref": null, "provider_ref": "prov-pangu", "payload": { "track_ref": "dd-pangu", "status": "rejected", "reason_summary": "窗口、预算、前提三项硬冲突，且有失败前科" }, "evidence_refs": ["ev-deploy-fail-pg"] },
+    { "id": "l-013", "at": "2026-03-12", "type": "due_diligence_closed", "engagement_ref": null, "provider_ref": "prov-muyan", "payload": { "track_ref": "dd-muyan", "status": "rejected", "reason_summary": "不解决一期瓶颈，列为二期候选" }, "evidence_refs": [] },
+    { "id": "l-014", "at": "2026-03-20", "type": "evidence_registered", "engagement_ref": null, "provider_ref": null, "payload": { "evidence_ref": "ev-dd-wifi", "name": "冲床旁电源与 Wi-Fi 点位核查照片", "retained_by_enterprise": true }, "evidence_refs": ["ev-dd-wifi"] },
+    { "id": "l-015", "at": "2026-03-31", "type": "due_diligence_closed", "engagement_ref": null, "provider_ref": "prov-qieyun", "payload": { "track_ref": "dd-qieyun", "status": "shortlisted", "open_prerequisites": ["pre-qy-2 换模骨干 3 个工作日排期"] }, "evidence_refs": ["ev-dd-wifi"] },
+    { "id": "l-016", "at": "2026-04-02", "type": "provider_switched", "engagement_ref": null, "provider_ref": null, "payload": { "from_engagement_ref": "eng-pangu-2025", "to_engagement_ref": "eng-qieyun-2026", "evidence_retained": ["ev-base-log", "ev-base-oee", "ev-base-defect", "ev-deploy-fail-pg", "ev-pg-destroy"] }, "evidence_refs": ["ev-base-log", "ev-deploy-fail-pg"] },
+    { "id": "l-017", "at": "2026-04-02", "type": "contract_signed", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "quote_version_ref": "quote-qy-2026", "first_year_total_cny": 156000, "metric_acceptance_binding": "连续四周平均换模不高于 60 分钟/次，以企业自有计时记录核验" }, "evidence_refs": ["ev-base-log"] },
+    { "id": "l-018", "at": "2026-04-02", "type": "subsidy_reserved", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "occupation_ref": "sub-occ-2026", "subsidy_ref": "sub-local-xklz", "amount_cny": 80000, "reused_from_occupation": "sub-occ-2025" }, "evidence_refs": [] },
+    { "id": "l-019", "at": "2026-04-03", "type": "data_granted", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "grant_ref": "grant-g-qy", "datasets": ["ds-changeover-log-anon", "ds-line-output-ledger"], "access": "read" }, "evidence_refs": [] },
+    { "id": "l-020", "at": "2026-04-27", "type": "deployed", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "deployed_in_windows": ["2026-04-12 周日", "2026-04-19 周日", "2026-04-26 周日"], "each_window_hours": 3.5, "blackout_violation": false }, "evidence_refs": ["ev-deploy-qy"] },
+    { "id": "l-021", "at": "2026-04-27", "type": "evidence_registered", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "evidence_ref": "ev-deploy-qy", "name": "锲云分台部署盖章验收单", "retained_by_enterprise": true }, "evidence_refs": ["ev-deploy-qy"] },
+    { "id": "l-022", "at": "2026-04-27", "type": "stage_accepted", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "stage_ref": "st-qy-1" }, "evidence_refs": ["ev-deploy-qy"] },
+    { "id": "l-023", "at": "2026-05-31", "type": "metric_change", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "metric_ref": "m-changeover", "baseline_value": 118, "value": 96, "unit": "分钟/次", "window": "2026-05 月均" }, "evidence_refs": ["ev-base-log"] },
+    { "id": "l-024", "at": "2026-05-31", "type": "sustained_use", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "month": "2026-05", "record_coverage_pct": 96, "active_shifts_per_week": 5, "report_ref": "rpt-use-2026-05", "report_retained_by_enterprise": true }, "evidence_refs": [] },
+    { "id": "l-025", "at": "2026-06-01", "type": "stage_accepted", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "stage_ref": "st-qy-2" }, "evidence_refs": ["ev-base-log"] },
+    { "id": "l-026", "at": "2026-06-05", "type": "subsidy_disbursed", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "occupation_ref": "sub-occ-2026", "amount_cny": 32000, "cumulative_cny": 32000, "against_stage": "st-qy-2" }, "evidence_refs": [] },
+    { "id": "l-027", "at": "2026-06-30", "type": "sustained_use", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "month": "2026-06", "record_coverage_pct": 97, "active_shifts_per_week": 5, "report_ref": "rpt-use-2026-06", "report_retained_by_enterprise": true }, "evidence_refs": [] },
+    { "id": "l-028", "at": "2026-07-31", "type": "sustained_use", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "month": "2026-07", "record_coverage_pct": 98, "active_shifts_per_week": 6, "report_ref": "rpt-use-2026-07", "report_retained_by_enterprise": true }, "evidence_refs": [] },
+    { "id": "l-029", "at": "2026-08-31", "type": "metric_change", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "metric_ref": "m-changeover", "baseline_value": 118, "value": 74, "unit": "分钟/次", "window": "2026-08 月均" }, "evidence_refs": ["ev-base-log"] },
+    { "id": "l-030", "at": "2026-08-31", "type": "sustained_use", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "month": "2026-08", "record_coverage_pct": 98, "active_shifts_per_week": 6, "report_ref": "rpt-use-2026-08", "report_retained_by_enterprise": true }, "evidence_refs": [] },
+    { "id": "l-031", "at": "2026-09-30", "type": "sustained_use", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "month": "2026-09", "record_coverage_pct": 99, "active_shifts_per_week": 6, "report_ref": "rpt-use-2026-09", "report_retained_by_enterprise": true }, "evidence_refs": [] },
+    { "id": "l-032", "at": "2026-10-24", "type": "metric_change", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "metric_ref": "m-changeover", "baseline_value": 118, "value": 57.5, "unit": "分钟/次", "window": "2026-09-27 至 2026-10-24 连续四周" }, "evidence_refs": ["ev-metric-2026-10"] },
+    { "id": "l-033", "at": "2026-10-24", "type": "metric_change", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "metric_ref": "m-oee-stamping", "baseline_value": 61.2, "value": 72.1, "unit": "%", "window": "2026-10 月折算" }, "evidence_refs": ["ev-metric-2026-10"] },
+    { "id": "l-034", "at": "2026-10-24", "type": "evidence_registered", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "evidence_ref": "ev-metric-2026-10", "name": "2026年9-10月连续四周换模计时记录与产量折算表", "retained_by_enterprise": true }, "evidence_refs": ["ev-metric-2026-10"] },
+    { "id": "l-035", "at": "2026-10-26", "type": "stage_accepted", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "stage_ref": "st-qy-3", "measured_value": 57.5, "threshold": 60 }, "evidence_refs": ["ev-metric-2026-10"] },
+    { "id": "l-036", "at": "2026-10-30", "type": "subsidy_disbursed", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "occupation_ref": "sub-occ-2026", "amount_cny": 16000, "cumulative_cny": 48000, "against_stage": "st-qy-3" }, "evidence_refs": ["ev-metric-2026-10"] },
+    { "id": "l-037", "at": "2026-10-31", "type": "sustained_use", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "month": "2026-10", "record_coverage_pct": 99, "active_shifts_per_week": 6, "report_ref": "rpt-use-2026-10", "report_retained_by_enterprise": true }, "evidence_refs": [] },
+    { "id": "l-038", "at": "2026-11-15", "type": "sustained_use", "engagement_ref": "eng-qieyun-2026", "provider_ref": "prov-qieyun", "payload": { "month": "2026-11(截至15日)", "record_coverage_pct": 99, "active_shifts_per_week": 6, "report_ref": "rpt-use-2026-11", "report_retained_by_enterprise": true }, "evidence_refs": [] }
+  ]
+}

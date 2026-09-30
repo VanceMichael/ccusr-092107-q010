@@ -1,0 +1,204 @@
+{
+  "domain": "sme-digital-matching",
+  "doc_type": "supply_demand_match",
+  "version": 1,
+  "generated_at": "2026-03-10",
+  "enterprise_ref": "ent-hongye",
+  "industry_ref": "ind-metal-stamping",
+  "industry_usage": "comparison_only",
+  "method": {
+    "inputs": [
+      "企业实测基线 fixtures/enterprise.json",
+      "企业目标与约束 fixtures/enterprise.json",
+      "产品披露 fixtures/products.json"
+    ],
+    "hard_filter_order": ["prerequisites", "shutdown_window", "budget", "process_fit"],
+    "note": "硬性前提、停机窗口、预算任一不满足直接 reject；行业均值不进入任何评分。"
+  },
+  "candidates": [
+    {
+      "product_ref": "prod-qieyun-smed",
+      "provider_ref": "prov-qieyun",
+      "verdict": "recommend",
+      "dimensions": [
+        {
+          "key": "process_fit",
+          "rating": "pass",
+          "reason": "企业自述瓶颈为冲压换模（基线 m-changeover=118 分钟/次），产品 does 列表正覆盖换模计时与作业引导；不做排产/ERP 的边界与小厂诉求一致，避免功能堆砌。",
+          "constraint_ref": "t-changeover",
+          "disclosure_ref": "prod-qieyun-smed.capability_boundary"
+        },
+        {
+          "key": "shutdown_window",
+          "rating": "pass",
+          "reason": "产品需连续停机 3 小时且可分批（batchable=true），企业周日窗口为 4 小时（sw-sunday），可分台在多个周日完成，并可避开月末 blackout 期。",
+          "constraint_ref": "sw-sunday",
+          "disclosure_ref": "prod-qieyun-smed.shutdown_requirement"
+        },
+        {
+          "key": "budget",
+          "rating": "pass",
+          "reason": "生效报价 quote-qy-2026 首年 156000 元，低于首年预算上限 200000 元；旧版 quote-qy-2025 已 superseded，不作为测算依据。",
+          "constraint_ref": "budget.first_year_cap_cny",
+          "disclosure_ref": "quote-qy-2026"
+        },
+        {
+          "key": "prerequisites",
+          "rating": "partial",
+          "reason": "Wi-Fi 与电源现场基本具备待尽调确认；hard 前提 pre-qy-2 需换模骨干投入 3 个工作日，企业需在合同前书面排期。",
+          "disclosure_ref": "pre-qy-2"
+        },
+        {
+          "key": "capability_boundary",
+          "rating": "pass",
+          "reason": "does_not 明确首版不采 PLC 信号，企业不应期待自动 OEE；OEE 目标 t-oee 需约定以台账+看板数据联合核算。"
+        },
+        {
+          "key": "case_evidence",
+          "rating": "pass",
+          "reason": "case-qy-07 为同类规模单机冲压厂，有盖章验收单且可现场走访；case-qy-11 仅感谢信、不可走访，不予采信，仅作背景。",
+          "disclosure_ref": "case-qy-07"
+        }
+      ],
+      "hard_blockers": [],
+      "verdict_reason": "针对自述瓶颈、窗口与预算均满足，且有同类可核验案例；前提项可在尽调中关闭。"
+    },
+    {
+      "product_ref": "prod-pangu-mes",
+      "provider_ref": "prov-pangu",
+      "verdict": "reject",
+      "dimensions": [
+        {
+          "key": "process_fit",
+          "rating": "partial",
+          "reason": "全模块覆盖换模相关数据采集，但企业只有一个换模瓶颈诉求，does_not 明确不提供单模块裁剪，属于功能齐全但不适用的典型。"
+        },
+        {
+          "key": "shutdown_window",
+          "rating": "fail",
+          "reason": "整线割接需连续 16 小时且不可分批，企业最长窗口仅 4 小时且月末禁停，硬性不满足。",
+          "constraint_ref": "sw-sunday",
+          "disclosure_ref": "prod-pangu-mes.shutdown_requirement"
+        },
+        {
+          "key": "budget",
+          "rating": "fail",
+          "reason": "首年 386000 元（不含硬件与二开），超过首年预算 200000 元，也超过总预算 350000 元。",
+          "constraint_ref": "budget.first_year_cap_cny",
+          "disclosure_ref": "quote-pg-2026"
+        },
+        {
+          "key": "prerequisites",
+          "rating": "fail",
+          "reason": "要求专职信息员、机房和冲床开放协议（pre-pg-1/pre-pg-2），32 人小厂不具备；关键岗位脱产 6 周与发货高峰冲突。",
+          "disclosure_ref": "pre-pg-1"
+        },
+        {
+          "key": "capability_boundary",
+          "rating": "partial",
+          "reason": "能力本身不弱，但边界声明显示其部署形态与本厂约束互斥。"
+        },
+        {
+          "key": "case_evidence",
+          "rating": "fail",
+          "reason": "唯一案例为 600 人集团工厂，规模与场景不可比，且只有官网新闻稿。",
+          "disclosure_ref": "case-pg-03"
+        }
+      ],
+      "hard_blockers": ["shutdown_window", "budget", "prerequisites"],
+      "verdict_reason": "停机窗口、预算、实施前提三项硬性冲突，演示再完整也不进入尽调短名单。"
+    },
+    {
+      "product_ref": "prod-muyan-vision",
+      "provider_ref": "prov-muyan",
+      "verdict": "conditional",
+      "dimensions": [
+        {
+          "key": "process_fit",
+          "rating": "partial",
+          "reason": "针对终检质量（与二期目标 t-defect 相关），does_not 明确不改善换模，无法解决当前自述瓶颈，建议列为二期候选。"
+        },
+        {
+          "key": "shutdown_window",
+          "rating": "pass",
+          "reason": "终检工位独立，4 小时可分批安装，与周日窗口相容。",
+          "constraint_ref": "sw-sunday",
+          "disclosure_ref": "prod-muyan-vision.shutdown_requirement"
+        },
+        {
+          "key": "budget",
+          "rating": "partial",
+          "reason": "单看 178000 元在首年预算内，但与锲云方案 156000 元同期实施将合计 334000 元，叠加后续年费会挤占首年预算，故不与一期并行采购。",
+          "constraint_ref": "budget.first_year_cap_cny"
+        },
+        {
+          "key": "prerequisites",
+          "rating": "unknown",
+          "reason": "hard 前提 pre-my-2 要求首件打光 POC 通过后才签约，本厂高反光件比例未测，结果未知。",
+          "disclosure_ref": "pre-my-2"
+        },
+        {
+          "key": "capability_boundary",
+          "rating": "pass",
+          "reason": "边界清晰：只做外观检测，且自陈高反光面件需先验证。"
+        },
+        {
+          "key": "case_evidence",
+          "rating": "pass",
+          "reason": "case-my-05 有第三方机构漏检率报告且可走访，证据强度高。",
+          "disclosure_ref": "case-my-05"
+        }
+      ],
+      "hard_blockers": [],
+      "verdict_reason": "证据充分且窗口相容，但不解决一期瓶颈、预算不宜并行、POC 未知，条件性列入二期。"
+    }
+  ],
+  "expected_effects": [
+    {
+      "product_ref": "prod-qieyun-smed",
+      "target_ref": "t-changeover",
+      "baseline_ref": "m-changeover",
+      "expected": "六个月内平均换模时间由实测 118 分钟/次向 60 分钟/次收敛",
+      "basis": "同类可走访案例 case-qy-07 由 132 降至 71 分钟；本厂基线与该案例最接近，但降幅不构成承诺",
+      "binding": false
+    },
+    {
+      "product_ref": "prod-qieyun-smed",
+      "target_ref": "t-oee",
+      "baseline_ref": "m-oee-stamping",
+      "expected": "随换模与非计划停机记录完善，OEE 由 61.2% 逐步改善，目标 75% 留待合同验收条款量化",
+      "basis": "基于本厂 m-oee-stamping 与 m-downtime 联动测算，未采用行业 68% 均值",
+      "binding": false
+    }
+  ],
+  "industry_comparison": [
+    {
+      "benchmark_ref": "bm-changeover",
+      "baseline_ref": "m-changeover",
+      "usage": "comparison_only",
+      "note": "行业均值 85 分钟低于本厂实测 118 分钟，仅用于让企业了解差距方向；目标 60 分钟依据企业自身瓶颈诉求设定，未以 85 为起点。"
+    },
+    {
+      "benchmark_ref": "bm-oee",
+      "baseline_ref": "m-oee-stamping",
+      "usage": "comparison_only",
+      "note": "行业均值 68% 高于本厂实测 61.2%，但样本含多工位联线，口径不可比，仅展示不打分。"
+    },
+    {
+      "benchmark_ref": "bm-defect",
+      "baseline_ref": "m-defect",
+      "usage": "comparison_only",
+      "note": "缺陷口径不一致，仅作背景，不用于二期目标值设定。"
+    }
+  ],
+  "recommendation": {
+    "product_ref": "prod-qieyun-smed",
+    "reasons": [
+      "唯一直接命中企业自述换模瓶颈的产品",
+      "3 小时可分批实施落入每周 4 小时停机窗",
+      "生效报价首年 156000 元在 200000 元预算内",
+      "具备同类规模、可走访的可验证案例",
+      "能力边界收窄，does_not 与小厂诉求一致"
+    ]
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "供需匹配结论（带理由）",
+  "type": "object",
+  "required": ["domain", "doc_type", "version", "enterprise_ref", "industry_usage", "candidates", "expected_effects", "recommendation"],
+  "properties": {
+    "domain": { "const": "sme-digital-matching" },
+    "doc_type": { "const": "supply_demand_match" },
+    "version": { "type": "integer", "minimum": 1 },
+    "generated_at": { "type": "string" },
+    "enterprise_ref": { "type": "string" },
+    "industry_ref": { "type": "string" },
+    "industry_usage": { "const": "comparison_only" },
+    "method": { "type": "object" },
+    "candidates": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["product_ref", "provider_ref", "verdict", "dimensions"],
+        "properties": {
+          "product_ref": { "type": "string" },
+          "provider_ref": { "type": "string" },
+          "verdict": { "enum": ["recommend", "conditional", "reject"] },
+          "dimensions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["key", "rating", "reason"],
+              "properties": {
+                "key": {
+                  "enum": ["process_fit", "shutdown_window", "budget", "prerequisites", "capability_boundary", "case_evidence"]
+                },
+                "rating": { "enum": ["pass", "partial", "fail", "unknown"] },
+                "reason": { "type": "string" },
+                "constraint_ref": { "type": "string" },
+                "disclosure_ref": { "type": "string" }
+              }
+            }
+          },
+          "hard_blockers": { "type": "array", "items": { "type": "string" } },
+          "verdict_reason": { "type": "string" }
+        }
+      }
+    },
+    "expected_effects": {
+      "type": "array",
+      "description": "每条预期效果必须引用企业实测基线；行业均值不得出现在此处",
+      "items": {
+        "type": "object",
+        "required": ["product_ref", "baseline_ref", "expected", "basis", "binding"],
+        "properties": {
+          "product_ref": { "type": "string" },
+          "target_ref": { "type": "string" },
+          "baseline_ref": { "type": "string" },
+          "expected": { "type": "string" },
+          "basis": { "type": "string" },
+          "binding": {
+            "const": false,
+            "description": "尽调阶段的预期不是承诺；写入合同验收条款后才约束服务商"
+          }
+        }
+      }
+    },
+    "industry_comparison": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["benchmark_ref", "baseline_ref", "usage", "note"],
+        "properties": {
+          "benchmark_ref": { "type": "string" },
+          "baseline_ref": { "type": "string" },
+          "usage": { "const": "comparison_only" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "recommendation": {
+      "type": "object",
+      "required": ["product_ref", "reasons"],
+      "properties": {
+        "product_ref": { "type": "string" },
+        "reasons": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  },
+  "additionalProperties": false
+}

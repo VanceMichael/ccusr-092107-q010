@@ -1,0 +1,40 @@
+{
+  "domain": "sme-digital-matching",
+  "doc_type": "industry_benchmarks",
+  "version": 1,
+  "industry": {
+    "id": "ind-metal-stamping",
+    "name": "金属冲压加工（虚构行业分类）"
+  },
+  "usage": "comparison_only",
+  "disclaimer": "以下数值为虚构的行业抽样平均值，样本企业在产品结构、设备年代与订单模式上与宏业厂不同，只能在企业已有实测基线后做事后对比，不得充当企业现状、目标值或匹配打分输入。",
+  "benchmarks": [
+    {
+      "id": "bm-oee",
+      "metric": "冲压工序平均 OEE",
+      "average": 68,
+      "unit": "%",
+      "year": 2025,
+      "source": "虚构的华东冲压行业协会抽样",
+      "sample_note": "样本含多条多工位联线，平均规模大于本厂"
+    },
+    {
+      "id": "bm-changeover",
+      "metric": "平均换模时间",
+      "average": 85,
+      "unit": "分钟/次",
+      "year": 2025,
+      "source": "虚构的华东冲压行业协会抽样",
+      "sample_note": "含已完成快速换模改造的企业"
+    },
+    {
+      "id": "bm-defect",
+      "metric": "平均不良率",
+      "average": 2.6,
+      "unit": "%",
+      "year": 2025,
+      "source": "虚构的华东冲压行业协会抽样",
+      "sample_note": "缺陷定义口径与本厂终检口径不完全一致"
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "domain": "sme-digital-matching",
+  "doc_type": "enterprise_profile",
+  "version": 1,
+  "sample_id": "sample-020",
+  "enterprise": {
+    "id": "ent-hongye",
+    "name": "宏业冲压件厂（虚构）",
+    "industry_id": "ind-metal-stamping",
+    "stage": "成长期",
+    "size": { "employees": 32, "annual_revenue_cny": 26000000, "note": "虚构规模数据" }
+  },
+  "production_line": {
+    "id": "line-press-01",
+    "name": "冲压一线",
+    "steps": [
+      { "id": "st-shearing", "name": "开卷剪切", "equipment": ["开卷线 kv-01"] },
+      { "id": "st-stamping", "name": "冲压成型", "equipment": ["冲床 cp-160", "冲床 cp-200"] },
+      { "id": "st-deburring", "name": "去毛刺", "equipment": ["研磨台 gr-02"] },
+      { "id": "st-inspection", "name": "终检包装", "equipment": [] }
+    ],
+    "baseline": {
+      "measured_from": "2026-01-05",
+      "measured_to": "2026-02-01",
+      "metrics": [
+        {
+          "id": "m-changeover",
+          "step_id": "st-stamping",
+          "metric": "平均换模时间",
+          "value": 118,
+          "unit": "分钟/次",
+          "measured_at": "2026-02-02",
+          "source": "班组连续四周人工计时记录",
+          "evidence_refs": ["ev-base-log"]
+        },
+        {
+          "id": "m-oee-stamping",
+          "step_id": "st-stamping",
+          "metric": "瓶颈工序设备综合效率 OEE",
+          "value": 61.2,
+          "unit": "%",
+          "measured_at": "2026-02-02",
+          "source": "依据产量台账与计时记录折算",
+          "evidence_refs": ["ev-base-log", "ev-base-oee"]
+        },
+        {
+          "id": "m-defect",
+          "step_id": null,
+          "metric": "整线不良率",
+          "value": 3.4,
+          "unit": "%",
+          "measured_at": "2026-02-02",
+          "source": "四周质检记录汇总",
+          "evidence_refs": ["ev-base-defect"]
+        },
+        {
+          "id": "m-downtime",
+          "step_id": "st-stamping",
+          "metric": "非计划停机",
+          "value": 17.5,
+          "unit": "小时/月",
+          "measured_at": "2026-02-02",
+          "source": "设备维修台账与班组停机记录",
+          "evidence_refs": ["ev-base-log"]
+        }
+      ]
+    }
+  },
+  "targets": [
+    {
+      "id": "t-changeover",
+      "metric_id": "m-changeover",
+      "direction": "decrease",
+      "target_value": 60,
+      "unit": "分钟/次",
+      "deadline": "2026-10-31",
+      "reason": "换模是本厂自述瓶颈，压缩换模时间可直接增加有效冲压工时"
+    },
+    {
+      "id": "t-oee",
+      "metric_id": "m-oee-stamping",
+      "direction": "increase",
+      "target_value": 75,
+      "unit": "%",
+      "deadline": "2027-01-31",
+      "reason": "与换模、停机改善联动，按本企业基线设定而非行业均值"
+    },
+    {
+      "id": "t-defect",
+      "metric_id": "m-defect",
+      "direction": "decrease",
+      "target_value": 2.0,
+      "unit": "%",
+      "deadline": "2027-01-31",
+      "reason": "终检返修占用包装工时，列为二期目标"
+    }
+  ],
+  "constraints": {
+    "shutdown_windows": [
+      { "id": "sw-sunday", "recurrence": "每周日 06:00-10:00", "max_continuous_hours": 4 }
+    ],
+    "blackout_periods": [
+      { "id": "bp-month-end", "recurrence": "每月最后五个工作日", "reason": "发货高峰，不接受任何停机" }
+    ],
+    "budget": {
+      "total_cap_cny": 350000,
+      "first_year_cap_cny": 200000,
+      "currency": "CNY"
+    }
+  },
+  "evidence_vault": [
+    {
+      "id": "ev-base-log",
+      "name": "2026年1月四周停机与换模计时记录表（扫描件）",
+      "captured_by": "enterprise",
+      "captured_at": "2026-02-02",
+      "sha256": "000000000000000000000000000000000000000000000000000000000000b001",
+      "retained_by_enterprise": true
+    },
+    {
+      "id": "ev-base-oee",
+      "name": "冲压一线班组产量台账（1月）",
+      "captured_by": "enterprise",
+      "captured_at": "2026-02-02",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000b002",
+      "retained_by_enterprise": true
+    },
+    {
+      "id": "ev-base-defect",
+      "name": "1月质检不良记录汇总表",
+      "captured_by": "enterprise",
+      "captured_at": "2026-02-02",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000b003",
+      "retained_by_enterprise": true
+    }
+  ]
+}

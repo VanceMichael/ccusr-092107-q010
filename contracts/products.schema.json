@@ -1,0 +1,117 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "数字产品能力披露",
+  "type": "object",
+  "required": ["domain", "doc_type", "version", "providers"],
+  "properties": {
+    "domain": { "const": "sme-digital-matching" },
+    "doc_type": { "const": "product_disclosures" },
+    "version": { "type": "integer", "minimum": 1 },
+    "providers": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "products"],
+        "properties": {
+          "id": { "type": "string" },
+          "name": { "type": "string" },
+          "products": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "name",
+                "capability_boundary",
+                "implementation_prerequisites",
+                "shutdown_requirement",
+                "pricing_versions",
+                "verifiable_cases"
+              ],
+              "properties": {
+                "id": { "type": "string" },
+                "name": { "type": "string" },
+                "summary": { "type": "string" },
+                "capability_boundary": {
+                  "type": "object",
+                  "required": ["does", "does_not"],
+                  "properties": {
+                    "does": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+                    "does_not": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+                  }
+                },
+                "implementation_prerequisites": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "required": ["id", "statement", "severity"],
+                    "properties": {
+                      "id": { "type": "string" },
+                      "statement": { "type": "string" },
+                      "severity": { "enum": ["hard", "soft"] }
+                    }
+                  }
+                },
+                "shutdown_requirement": {
+                  "type": "object",
+                  "required": ["requires_continuous_hours", "batchable"],
+                  "properties": {
+                    "requires_continuous_hours": { "type": "number" },
+                    "batchable": { "type": "boolean" },
+                    "note": { "type": "string" }
+                  }
+                },
+                "pricing_versions": {
+                  "type": "array",
+                  "minItems": 1,
+                  "description": "报价必须带版本与有效期；同一时间至多一个生效版本",
+                  "items": {
+                    "type": "object",
+                    "required": ["id", "valid_from", "first_year_total_cny", "includes", "status"],
+                    "properties": {
+                      "id": { "type": "string" },
+                      "valid_from": { "type": "string" },
+                      "valid_to": { "type": ["string", "null"] },
+                      "status": { "enum": ["active", "superseded"] },
+                      "first_year_total_cny": { "type": "number" },
+                      "annual_recurring_cny": { "type": "number" },
+                      "includes": { "type": "array", "items": { "type": "string" } },
+                      "excludes": { "type": "array", "items": { "type": "string" } }
+                    }
+                  }
+                },
+                "verifiable_cases": {
+                  "type": "array",
+                  "minItems": 1,
+                  "items": {
+                    "type": "object",
+                    "required": ["id", "customer_nature", "reported_outcomes", "verification"],
+                    "properties": {
+                      "id": { "type": "string" },
+                      "customer_nature": { "type": "string", "description": "脱敏的同类客户描述" },
+                      "go_live_at": { "type": "string" },
+                      "reported_outcomes": { "type": "array", "items": { "type": "string" } },
+                      "verification": {
+                        "type": "object",
+                        "required": ["method", "artifact_ref"],
+                        "properties": {
+                          "method": { "type": "string" },
+                          "artifact_ref": { "type": "string" },
+                          "visit_available": { "type": "boolean" }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

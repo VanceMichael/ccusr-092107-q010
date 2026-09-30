@@ -1,0 +1,202 @@
+{
+  "domain": "sme-digital-matching",
+  "doc_type": "product_disclosures",
+  "version": 1,
+  "providers": [
+    {
+      "id": "prov-qieyun",
+      "name": "锲云智造（虚构）",
+      "products": [
+        {
+          "id": "prod-qieyun-smed",
+          "name": "锲云快速换模看板（轻量版）",
+          "summary": "面向单机冲压的换模作业引导与计时看板，功能边界刻意收窄",
+          "capability_boundary": {
+            "does": [
+              "换模步骤计时、顺序引导与超时提醒",
+              "按模具/班组统计换模耗时",
+              "换模作业电子化的标准作业票"
+            ],
+            "does_not": [
+              "不做整厂排产与 ERP 对接",
+              "不自动采集冲床 PLC 信号（首版为平板手工触发）",
+              "不覆盖质量检测"
+            ]
+          },
+          "implementation_prerequisites": [
+            { "id": "pre-qy-1", "statement": "每台冲床旁有电源与可用 Wi-Fi", "severity": "hard" },
+            { "id": "pre-qy-2", "statement": "企业能安排一名换模骨干配合梳理作业票，约 3 个工作日", "severity": "hard" },
+            { "id": "pre-qy-3", "statement": "历史换模有书面或口述记录可供基线对照", "severity": "soft" }
+          ],
+          "shutdown_requirement": {
+            "requires_continuous_hours": 3,
+            "batchable": true,
+            "note": "可拆为三次各 1 小时，在周日停机窗内分台实施，无需连续占用"
+          },
+          "pricing_versions": [
+            {
+              "id": "quote-qy-2025",
+              "valid_from": "2025-06-01",
+              "valid_to": "2026-03-31",
+              "status": "superseded",
+              "first_year_total_cny": 168000,
+              "annual_recurring_cny": 24000,
+              "includes": ["2 台冲床授权", "实施与培训", "首年运维"],
+              "excludes": ["平板硬件"]
+            },
+            {
+              "id": "quote-qy-2026",
+              "valid_from": "2026-04-01",
+              "valid_to": null,
+              "status": "active",
+              "first_year_total_cny": 156000,
+              "annual_recurring_cny": 24000,
+              "includes": ["3 台冲床授权", "实施与培训", "首年运维", "两台加固平板"],
+              "excludes": ["网络改造"]
+            }
+          ],
+          "verifiable_cases": [
+            {
+              "id": "case-qy-07",
+              "customer_nature": "华东某 40 人五金冲压厂，单机冲床 3 台（脱敏）",
+              "go_live_at": "2025-09-15",
+              "reported_outcomes": ["换模时间由 132 分钟降至 71 分钟（六个月）", "周报持续使用 9 个月"],
+              "verification": {
+                "method": "客户盖章的实施验收单与上线后六个月周报截图，可安排现场走访",
+                "artifact_ref": "art-qy-case07",
+                "visit_available": true
+              }
+            },
+            {
+              "id": "case-qy-11",
+              "customer_nature": "华南某家电配件冲压车间（脱敏，规模大于本厂）",
+              "go_live_at": "2026-01-10",
+              "reported_outcomes": ["换模时间下降 28%"],
+              "verification": {
+                "method": "仅服务商自述的客户感谢信，无第三方核验",
+                "artifact_ref": "art-qy-case11",
+                "visit_available": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prov-pangu",
+      "name": "盘古工业软件（虚构）",
+      "products": [
+        {
+          "id": "prod-pangu-mes",
+          "name": "盘古全栈 MES 套件",
+          "summary": "功能齐全的大型制造执行系统，以标准化演示为主要售前形式",
+          "capability_boundary": {
+            "does": [
+              "排产、工单、质量、设备、仓储全模块",
+              "PLC/数采网关自动采集",
+              "与主流 ERP 双向集成"
+            ],
+            "does_not": [
+              "不提供只买单模块的小厂裁剪方案",
+              "不支持在每周 4 小时停机窗内完成整线切换"
+            ]
+          },
+          "implementation_prerequisites": [
+            { "id": "pre-pg-1", "statement": "企业具备机房或专用服务器并配专职信息员", "severity": "hard" },
+            { "id": "pre-pg-2", "statement": "冲床需具备开放通讯协议或加装数采网关", "severity": "hard" },
+            { "id": "pre-pg-3", "statement": "实施期间需方关键岗位全程脱产配合约 6 周", "severity": "hard" }
+          ],
+          "shutdown_requirement": {
+            "requires_continuous_hours": 16,
+            "batchable": false,
+            "note": "整线割接需一个连续周末完成，无法拆进每周 4 小时窗口"
+          },
+          "pricing_versions": [
+            {
+              "id": "quote-pg-2025",
+              "valid_from": "2025-01-01",
+              "valid_to": "2025-12-31",
+              "status": "superseded",
+              "first_year_total_cny": 352000,
+              "annual_recurring_cny": 60000,
+              "includes": ["全模块许可", "标准实施 50 人天"],
+              "excludes": ["硬件、网络、二次开发"]
+            },
+            {
+              "id": "quote-pg-2026",
+              "valid_from": "2026-01-01",
+              "valid_to": null,
+              "status": "active",
+              "first_year_total_cny": 386000,
+              "annual_recurring_cny": 68000,
+              "includes": ["全模块许可", "标准实施 60 人天"],
+              "excludes": ["硬件、网络、二次开发", "超范围实施人天"]
+            }
+          ],
+          "verifiable_cases": [
+            {
+              "id": "case-pg-03",
+              "customer_nature": "某 600 人汽车零部件集团下属工厂（脱敏）",
+              "go_live_at": "2024-11-01",
+              "reported_outcomes": ["全流程无纸化", "库存周转改善"],
+              "verification": {
+                "method": "集团官网新闻稿，未披露小批量多品种场景数据",
+                "artifact_ref": "art-pg-case03",
+                "visit_available": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "prov-muyan",
+      "name": "目衍视觉（虚构）",
+      "products": [
+        {
+          "id": "prod-muyan-vision",
+          "name": "目衍冲压件外观检测站",
+          "summary": "机器视觉替代人工终检，针对质量而非换模瓶颈",
+          "capability_boundary": {
+            "does": ["终检工位外观缺陷识别与分拣", "缺陷图片留存与统计"],
+            "does_not": ["不改善换模时间", "不监测设备运行状态", "不适用于未做光学打光验证的高反光面件"]
+          },
+          "implementation_prerequisites": [
+            { "id": "pre-my-1", "statement": "检测工位具备稳定光源与 220V 供电", "severity": "hard" },
+            { "id": "pre-my-2", "statement": "首件打光验证通过后才签约（POC 前置）", "severity": "hard" }
+          ],
+          "shutdown_requirement": {
+            "requires_continuous_hours": 4,
+            "batchable": true,
+            "note": "终检工位独立于冲压主机，可在周日窗口安装"
+          },
+          "pricing_versions": [
+            {
+              "id": "quote-my-2026",
+              "valid_from": "2026-02-01",
+              "valid_to": null,
+              "status": "active",
+              "first_year_total_cny": 178000,
+              "annual_recurring_cny": 36000,
+              "includes": ["单工位检测站", "200 种缺陷样本训练", "首年运维"],
+              "excludes": ["产线机械改造"]
+            }
+          ],
+          "verifiable_cases": [
+            {
+              "id": "case-my-05",
+              "customer_nature": "某 60 人不锈钢拉伸件厂（脱敏）",
+              "go_live_at": "2025-07-20",
+              "reported_outcomes": ["终检漏检率下降", "检出岗位减 1 人"],
+              "verification": {
+                "method": "第三方检测机构出具的漏检率对比报告编号可查",
+                "artifact_ref": "art-my-case05",
+                "visit_available": true
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
